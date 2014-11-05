@@ -4,6 +4,8 @@
 *.ear
 *.class
 
+build/classes/com/dinfogarneau/cours526
+
 # eclipse specific git ignore
 *.pydevproject
 .project
