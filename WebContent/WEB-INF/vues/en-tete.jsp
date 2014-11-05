@@ -11,7 +11,7 @@
 
 	<div id="form-connexion">
 		<!-- Formulaire de connexion -->
-		<form method="post" action="/connexion">
+		<form method="post" action="${pageContext.request.contextPath}/connexion">
 			<p>
 				<label for="nom-util">Nom d'utilisateur : </label>
 				<input type="text" name="nom-util" id="nom-util" />
@@ -26,7 +26,7 @@
 			<input type="hidden" name="source" value="rech-amis" />
 
 			<%-- Affichage du message d'erreur, si nécessaire --%>
-			<p id="msg-err-conn">MESSAGE D'ERREUR, SI NÉCESSAIRE SEULEMENT</p>
+			<p id="msg-err-conn">${sessionScope.msg-erreur}</p>
 		</form>
 	</div>  <!-- Fin de la division "form-connexion" -->
 

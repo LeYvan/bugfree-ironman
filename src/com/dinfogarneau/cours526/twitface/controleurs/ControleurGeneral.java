@@ -1,16 +1,19 @@
 package com.dinfogarneau.cours526.twitface.controleurs;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import com.dinfogarneau.cours526.twitface.classes.ConnexionMode;
+import com.dinfogarneau.cours526.twitface.modeles.ModeleConnexion;
 
 /**
  * Contrôleur général pour les ressources publiques.
  * @author Stéphane Lapointe
- * @author VOS NOMS COMPLETS ICI
+ * @author Yvan Dumont
  */
 public class ControleurGeneral extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -126,21 +129,21 @@ public class ControleurGeneral extends HttpServlet {
 		// Connexion
 		// =========
 		if (this.uri.equals("/connexion")) {
-
-			// TEMPORAIRE POUR SIMULER LE FAIT D'ÊTRE CONNECTÉ
-			// ***********************************************
-			request.getSession().setAttribute("nomUtil", "sackid");
-			request.getSession().setAttribute("nom", "Sacha Kidd");
-			request.getSession().setAttribute("noUtil", 258);
-			request.getSession().setAttribute("modeConn", ConnexionMode.MEMBRE);
-			// NOTE: DEVRA ÊTRE IMPLEMENTÉ À L'AIDE DU BEAN DE CONNEXION
-			// *********************************************************
-
-			// Redirection côté client vers la section pour les membres.
-			// Note : Aucune vue ne sera produite comme réponse à cette requête;
-			// La requête subséquente vers la section "membre" (faite par le navigateur Web)
-			// produira la vue correspondant à la page d'accueil des membres.
-			response.sendRedirect("membre");
+			ModeleConnexion connexion = new ModeleConnexion(request.getParameter("nom-util"),
+															request.getParameter("mot-passe"));
+			
+			if (connexion.getMessageErreur() == null) {
+				request.getSession().setAttribute("utilisateur", connexion);
+				if (connexion.getConnexionBean().getModeConn() == ConnexionMode.MEMBRE) {
+					response.sendRedirect("membre");
+				} else {
+					response.sendRedirect("admin");
+				}
+			} else {
+				request.setAttribute("msg-erreur", connexion.getMessageErreur());
+				String source = request.getParameter("source");
+				response.sendRedirect(source);
+			}
 
 		// Méthode HTTP non permise
 		// ========================
