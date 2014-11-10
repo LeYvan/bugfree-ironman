@@ -16,6 +16,7 @@ import com.dinfogarneau.cours526.twitface.modeles.ModeleGestionAmis;
  * Contrôleur pour les ressources des membres.
  * @author Stéphane Lapointe
  * @author Yvan Dumont
+ * @author Antoine Lamontagne
  */
 public class ControleurMembre extends HttpServlet {
 	private static final long serialVersionUID = 1L;
